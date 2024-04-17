@@ -39,7 +39,7 @@ public class FuncionarioControllerTest {
 		funcionario.setNmFuncionario("breno");
 		funcionario.setFlFuncionario(true);
 		funcionario.setDsCpf("12345678900");
-		funcionario.setDsEmail("brenofoda@gmail.com");
+		funcionario.setDsEmail("breno@gmail.com");
 		funcionario.setDsSenha("123123");
 		
 		Optional<Funcionario> funcionarioOp = Optional.of(funcionario);
@@ -66,7 +66,7 @@ public class FuncionarioControllerTest {
 		funcionario.setNmFuncionario("breno");
 		funcionario.setFlFuncionario(true);
 		funcionario.setDsCpf("12345678900");
-		funcionario.setDsEmail("brenofoda@gmail.com");
+		funcionario.setDsEmail("breno@gmail.com");
 		funcionario.setDsSenha("123123");
 		
 		ResponseEntity<String> response = this.controller.save(funcionario);

@@ -15,16 +15,19 @@ public class FuncionarioService {
 	@Autowired
 	private FuncionarioRepository repository;
 	
-	public String save(Funcionario obj) {
+	public String save(Funcionario obj) throws Exception {
 		
 		if(obj == null)
 			throw new RuntimeException();
 		
+		boolean emailVerificado = verifyEmail(obj.getDsEmail());
+		
+		if(!emailVerificado)
+			throw new Exception("E-mail inválido!");
+		
 		this.repository.save(obj);
 		return ("Salvo com sucesso!");
 	}
-	
-	
 	
 	public List<Funcionario> listAll(){
 		
@@ -36,10 +39,15 @@ public class FuncionarioService {
 		return ("Deletado com sucesso!");
 		
 	}
-	public String update(Funcionario funcionario, long idFuncionario) {
-		
+	public String update(Funcionario funcionario, long idFuncionario) throws Exception {
 		funcionario.setIdFuncionario(idFuncionario);
+		boolean emailVerificado = verifyEmail(funcionario.getDsEmail());
+		
+		if(!emailVerificado)
+			throw new Exception("E-mail inválido!");
+		
 		this.repository.save(funcionario);
+		
 		return("Atualizado com sucesso!");
 	}
 	public Funcionario findById(long idFuncionario) {
@@ -53,4 +61,13 @@ public class FuncionarioService {
 		return lista;
 		
 	}
+	
+	public Boolean verifyEmail(String dsEmail) {
+		boolean retorno = false;
+		
+		if(dsEmail.contains("@"))
+			retorno = true;
+		
+		return retorno;
+	}		
 }

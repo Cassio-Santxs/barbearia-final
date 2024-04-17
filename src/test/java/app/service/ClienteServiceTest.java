@@ -67,17 +67,5 @@ public class ClienteServiceTest {
 		cliente.setNmCliente("teste nome");
 		cliente.setDsEmail("Ivao");
 		cliente.setDsSenha("cassol");
-
-		String clienteId = this.clienteService.save(cliente);
-
 	}
-
-		@Test
-		@DisplayName("TESTE EMAIL()")
-		void testEmail() {
-			Cliente cliente = new Cliente();
-		}
-		
-		
-
 }

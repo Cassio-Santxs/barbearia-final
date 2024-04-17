@@ -7,16 +7,12 @@ import org.springframework.stereotype.Service;
 
 import app.entity.Cliente;
 import app.repository.ClienteRepository;
-import app.repository.HorarioRepository;
 
 @Service
 public class ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
-
-	@Autowired
-	private HorarioRepository horarioRepository;
 
 	public String save(Cliente obj) {
 		this.clienteRepository.save(obj);

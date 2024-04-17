@@ -20,11 +20,6 @@ import app.entity.Funcionario;
 import app.service.FuncionarioService;
 import jakarta.validation.Valid;
 
-
-
-
-
-
 @RestController
 @RequestMapping("api/funcionario")
 @Validated
@@ -44,6 +39,7 @@ public class FuncionarioController {
 			return new ResponseEntity<String>("Não foi possível salvar:   "+ e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 	}
+	
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Funcionario>> listAll(){
 		
@@ -57,8 +53,8 @@ public class FuncionarioController {
 		} 
 		
 	}
-	@DeleteMapping("/deleteById/{idFuncionario}")
 	
+	@DeleteMapping("/deleteById/{idFuncionario}")
 	public ResponseEntity<String> deleteById(@PathVariable long idFuncionario){
 		
 		try {
@@ -71,6 +67,7 @@ public class FuncionarioController {
 		}
 		
 	}
+	
 	@PutMapping("update/{idFuncionario}")
 	public ResponseEntity<String> update(@Valid @RequestBody Funcionario funcionario,@PathVariable long idFuncionario){
 		
@@ -81,7 +78,9 @@ public class FuncionarioController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
-	}@GetMapping("findById/{idFuncionario}")
+	}
+	
+	@GetMapping("findById/{idFuncionario}")
 	public ResponseEntity<Funcionario> findById(@PathVariable long idFuncionario){
 		
 		try {
@@ -91,6 +90,7 @@ public class FuncionarioController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
 	@GetMapping("/findByNome")
 	public ResponseEntity<List<Funcionario>> findByNmFuncionario(@RequestParam String nome){
 		
@@ -102,11 +102,4 @@ public class FuncionarioController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
 }

@@ -1,5 +1,7 @@
 package app.entity;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
@@ -32,10 +34,10 @@ public class Funcionario {
 	
 	@NotBlank(message = "insira uma senha válida. ")
 	private String dsSenha;
-
 	
-	 @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
-	 @JsonBackReference
+	@OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
+	@JsonBackReference
+	private List<Horario> horarios;
 	
 	public Long getIdFuncionario() {
 		return idFuncionario;
