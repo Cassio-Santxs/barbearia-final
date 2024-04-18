@@ -23,12 +23,11 @@ public class HorarioService {
 		return this.repository.findAll();
 	}
 
-		public String update(long id, Horario obj) {
-			obj.setIdHorario(id);
-			this.repository.save(obj);
-			return "Sucesso!";
-		}
-	
+	public String update(long id, Horario obj) {
+		obj.setIdHorario(id);
+		this.repository.save(obj);
+		return "Sucesso!";
+	}
 
 	public Horario findById(long id) {
 		return this.repository.findById(id).orElse(null);
@@ -37,5 +36,9 @@ public class HorarioService {
 	public String delete(long id) {
 		this.repository.deleteById(id);
 		return "Horario deletado com sucesso";
+	}
+	
+	public List<Horario> findByLowerPreco (double valor){
+		return this.repository.findByLowerPreco(valor);
 	}
 }

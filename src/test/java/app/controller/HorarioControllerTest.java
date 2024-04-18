@@ -67,6 +67,7 @@ public class HorarioControllerTest {
 		when(this.repository.save(horario)).thenReturn(horario);
 		when(this.repository.findById(1L)).thenReturn(horarioOp);
 		doNothing().when(repositoryMock).deleteById(1L);
+		when(this.repository.findByLowerPreco(50)).thenReturn(list);
 	}
 
 	@Test
@@ -113,5 +114,14 @@ public class HorarioControllerTest {
 		String msg = response.getBody();
 		
 		assertEquals("Horario deletado com sucesso", msg);
+	}
+	
+	@Test
+	@DisplayName("TESTE MÉTODO findByLowerPreco()")
+	void testFindByLowerPreco() {
+		ResponseEntity<List<Horario>> response = this.controller.findByLowerPreco(50);
+		List<Horario> lista = response.getBody();
+		
+		assertEquals(1, lista.size());
 	}
 }
