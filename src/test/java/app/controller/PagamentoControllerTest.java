@@ -2,6 +2,7 @@ package app.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.FormaPagamento;
@@ -99,5 +101,34 @@ public class PagamentoControllerTest {
     void testDelete() {
         ResponseEntity<Void> response = controller.deletePagamento(1L);
         assertEquals(204, response.getStatusCodeValue());
+    }
+    @Test
+    @DisplayName("Teste método save() com BadRequest")
+    void testSaveWithBadRequest() {
+        Pagamento pagamento = new Pagamento();
+        
+        // Simulando um cenário em que o serviço de pagamento lança uma exceção BadRequest
+        doThrow(IllegalArgumentException.class).when(repository).save(pagamento);
+        
+        // Chamando o save e verificando
+        ResponseEntity<String> response = controller.savePagamento(pagamento);
+        
+        //  Verifica se deu erro 400
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Teste método update() com BadRequest")
+    void testUpdateWithBadRequest() {
+        Pagamento pagamento = new Pagamento();
+        
+        // Simulando um cenário em que o serviço de pagamento lança uma exceção BadRequest
+        doThrow(IllegalArgumentException.class).when(repository).findById(1L);
+        
+        // Chamando o update
+        ResponseEntity<String> response = controller.updatePagamento(pagamento, 1L);
+        
+        // Verifica se deu erro 400
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/pagamento")
+@Validated
 public class PagamentoController {
 
     @Autowired
@@ -31,9 +33,10 @@ public class PagamentoController {
         try {
             pagamentoService.save(pagamento);
             String mensagem = "Pagamento salvo com sucesso!";
-            return new ResponseEntity<String>(mensagem, HttpStatus.CREATED);
+            return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);        }
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
     
     @DeleteMapping("/delete/{id}")
@@ -53,7 +56,7 @@ public class PagamentoController {
     }
     
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updatePagamento(@RequestBody Pagamento novoPagamento, @PathVariable Long id) {
+    public ResponseEntity<String> updatePagamento(@Valid @RequestBody Pagamento novoPagamento, @PathVariable Long id) {
         try {
             String msg = pagamentoService.updatePagamento(id, novoPagamento);
             return new ResponseEntity<>(msg, HttpStatus.OK);
@@ -61,6 +64,7 @@ public class PagamentoController {
             return new ResponseEntity<>("Não foi possível atualizar o pagamento. " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    
     @GetMapping("/listByValue/{valor}")
     public ResponseEntity<List<Pagamento>> listByValue(@PathVariable double valor) {
         try {
@@ -70,6 +74,7 @@ public class PagamentoController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+    
     @GetMapping("/findById/{id}")
     public ResponseEntity<Pagamento> findById(@PathVariable Long id) {
         try {
