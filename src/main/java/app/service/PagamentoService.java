@@ -30,16 +30,15 @@ public class PagamentoService {
     public List<Pagamento> listAll() {
         return pagamentoRepository.findAll();
     }
+    @Transactional
     public String updatePagamento(Long id, Pagamento novoPagamento) {
-        Pagamento pagamentoExistente = pagamentoRepository.findById(id).orElse(null);
-        if (pagamentoExistente != null) {
-            // Atualizar os campos relevantes do pagamento existente com os valores do novo pagamento
+        Optional<Pagamento> pagamentoOptional = pagamentoRepository.findById(id);
+        if (pagamentoOptional.isPresent()) {
+            Pagamento pagamentoExistente = pagamentoOptional.get();
             pagamentoExistente.setDtPagamento(novoPagamento.getDtPagamento());
             pagamentoExistente.setHorario(novoPagamento.getHorario());
             pagamentoExistente.setFormaPagamento(novoPagamento.getFormaPagamento());
             pagamentoExistente.setDsSituacao(novoPagamento.getDsSituacao());
-
-            // Salvar as alterações no banco de dados
             pagamentoRepository.save(pagamentoExistente);
             return "Pagamento atualizado com sucesso!";
         } else {
