@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Horario;
 import app.service.HorarioService;
+import jakarta.validation.Valid;
 
 @RestController
+@Validated
 @RequestMapping("/api/horario")
 public class HorarioController {
 
@@ -25,7 +28,7 @@ public class HorarioController {
 	private HorarioService service;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody Horario obj) {
+	public ResponseEntity<String> save(@Valid @RequestBody Horario obj) {
 		try {
 			String msg = this.service.save(obj);
 			return new ResponseEntity<String>(msg, HttpStatus.CREATED);
@@ -35,7 +38,7 @@ public class HorarioController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@RequestBody Horario obj, @PathVariable int id) {
+	public ResponseEntity<String> update(@Valid @RequestBody Horario obj, @PathVariable int id) {
 		try {
 			String msg = this.service.update(id, obj);
 			return new ResponseEntity<String>(msg, HttpStatus.OK);
@@ -70,16 +73,6 @@ public class HorarioController {
 		try {
 			String msg = this.service.delete(id);
 			return new ResponseEntity<String>(msg, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@GetMapping("/findByLowerPreco/{valor}")
-	public ResponseEntity<List<Horario>> findByLowerPreco(@PathVariable double valor) {
-		try {
-			List<Horario> lista = this.service.findByLowerPreco(valor);
-			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}

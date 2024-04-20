@@ -46,4 +46,13 @@ public class ClienteService {
 	public List<Cliente> findBydsCpf(String dscpf) {
 		return this.clienteRepository.findBydsCpf(dscpf);
 	}
+	
+	public Boolean verifyEmail(String dsEmail) {
+		boolean retorno = false;
+		
+		if(dsEmail.contains("@"))
+			retorno = true;
+		
+		return retorno;
+	}
 }

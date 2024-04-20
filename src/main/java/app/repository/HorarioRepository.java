@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import app.entity.Horario;
 
-
 public interface HorarioRepository extends JpaRepository<Horario, Long> {
-	@Query("FROM Horario WHERE vlHorario < :valor")
-	public List<Horario> findByLowerPreco (double valor);
+	
+	@Query("SELECT h FROM Horario h WHERE h.funcionario.idFuncionario = :idFuncionario AND h.dtHorario = :horario")
+	public List<Horario> checkHorarioExist(Long idFuncionario, String horario);
+
 }

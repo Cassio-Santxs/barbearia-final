@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Cliente;
 import app.service.ClienteService;
+import jakarta.validation.Valid;
 
+@Validated
 @RestController
 @RequestMapping("/api/cliente")
 public class ClienteController {
@@ -25,7 +28,7 @@ public class ClienteController {
 	@Autowired
 	private ClienteService service;
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody Cliente obj){
+	public ResponseEntity<String> save(@Valid @RequestBody Cliente obj){
 		try {
 			String msg = this.service.save(obj);
 			return new ResponseEntity<String>(msg, HttpStatus.CREATED);
@@ -35,7 +38,7 @@ public class ClienteController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@RequestBody Cliente obj, @PathVariable int id){
+	public ResponseEntity<String> update(@Valid @RequestBody Cliente obj, @PathVariable int id){
 		try {
 			String msg = this.service.update(id, obj);
 			return new ResponseEntity<String>(msg, HttpStatus.OK);
@@ -74,8 +77,8 @@ public class ClienteController {
 		}
 	}
 	
-	@GetMapping("/findByNome/{nome}")
-	public ResponseEntity<List<Cliente>> findByNome(@PathVariable String nmCliente){
+	@GetMapping("/findByNome/{nmCliente}")
+	public ResponseEntity<List<Cliente>> findByNmCliente(@PathVariable String nmCliente){
 		try {
 			List<Cliente> lista = this.service.findByNmCliente(nmCliente);
 			return new ResponseEntity<>(lista, HttpStatus.OK);

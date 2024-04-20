@@ -14,7 +14,10 @@ public class HorarioService {
 	@Autowired
 	private HorarioRepository repository;
 
-	public String save(Horario obj) {
+	public String save(Horario obj) throws Exception {
+		if(checkHorarioExist(obj.getFuncionario().getIdFuncionario(), obj.getDtHorario()).size() > 0)
+			throw new Exception("Já existe este horário cadastrado!");
+		
 		this.repository.save(obj);
 		return "Horario salvo com sucesso.";
 	}
@@ -38,7 +41,7 @@ public class HorarioService {
 		return "Horario deletado com sucesso";
 	}
 	
-	public List<Horario> findByLowerPreco (double valor){
-		return this.repository.findByLowerPreco(valor);
+	public List<Horario> checkHorarioExist (Long idFuncionario, String horario){
+		return this.repository.checkHorarioExist(idFuncionario, horario);
 	}
 }

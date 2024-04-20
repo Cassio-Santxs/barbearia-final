@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -18,8 +19,10 @@ public class Horario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idHorario;
 
+    @NotBlank(message = "Informe o Horário!")
     private String dtHorario;
     
+    @NotNull(message = "Informe o valor do Horário!")
     private double vlHorario;
 
     public double getVlHorario() {

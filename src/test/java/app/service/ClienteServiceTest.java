@@ -67,5 +67,15 @@ public class ClienteServiceTest {
 		cliente.setNmCliente("teste nome");
 		cliente.setDsEmail("Ivao");
 		cliente.setDsSenha("cassol");
+
+		String msg = this.clienteService.save(cliente);
+		assertEquals(cliente.getNmCliente() + " Cliente salvo com sucesso.", msg);
+	}
+		
+	@Test
+	@DisplayName("teste unitario para confirmar se o email é real")
+	void TestarEmail() {
+		Boolean emailVerificado = clienteService.verifyEmail("teste@teste.com");
+		assertEquals(true, emailVerificado);
 	}
 }

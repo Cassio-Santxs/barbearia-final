@@ -1,6 +1,7 @@
 package app.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -22,6 +23,7 @@ import app.entity.Funcionario;
 import app.entity.Horario;
 import app.repository.ClienteRepository;
 import app.repository.HorarioRepository;
+import jakarta.validation.ConstraintViolationException;
 
 @SpringBootTest()
 public class HorarioControllerTest {
@@ -48,7 +50,7 @@ public class HorarioControllerTest {
 		funcionario.setNmFuncionario("breno");
 		funcionario.setFlFuncionario(true);
 		funcionario.setDsCpf("12345678900");
-		funcionario.setDsEmail("brenofoda@gmail.com");
+		funcionario.setDsEmail("breno@gmail.com");
 		funcionario.setDsSenha("123123");
 		
 		Horario horario = new Horario();
@@ -67,7 +69,6 @@ public class HorarioControllerTest {
 		when(this.repository.save(horario)).thenReturn(horario);
 		when(this.repository.findById(1L)).thenReturn(horarioOp);
 		doNothing().when(repositoryMock).deleteById(1L);
-		when(this.repository.findByLowerPreco(50)).thenReturn(list);
 	}
 
 	@Test
@@ -81,7 +82,29 @@ public class HorarioControllerTest {
 	@Test
 	@DisplayName("TESTE MÉTODO save()")
 	void testsave() {
+		Cliente cliente = new Cliente();
+		cliente.setDsCpf("123");
+		cliente.setIdCliente(1L);
+		cliente.setNmCliente("TESTE ");
+		cliente.setDsEmail("Ivao");
+		cliente.setDsSenha("cassol");
+		
+		Funcionario funcionario = new Funcionario();
+		
+		funcionario.setIdFuncionario(1L);
+		funcionario.setNmFuncionario("breno");
+		funcionario.setFlFuncionario(true);
+		funcionario.setDsCpf("12345678900");
+		funcionario.setDsEmail("breno@gmail.com");
+		funcionario.setDsSenha("123123");
+		
 		Horario horario = new Horario();
+		horario.setIdHorario(1L);
+		horario.setDtHorario("01/01/0001");
+		horario.setVlHorario(20);
+		horario.setCliente(cliente);
+		horario.setFuncionario(funcionario);
+		
 		ResponseEntity<String> response = this.controller.save(horario);
 		String mensagem = response.getBody();
 
@@ -91,7 +114,29 @@ public class HorarioControllerTest {
 	@Test
 	@DisplayName("TESTE MÉTODO update()")
 	void testUpdate() {
+		Cliente cliente = new Cliente();
+		cliente.setDsCpf("123");
+		cliente.setIdCliente(1L);
+		cliente.setNmCliente("TESTE ");
+		cliente.setDsEmail("Ivao");
+		cliente.setDsSenha("cassol");
+		
+		Funcionario funcionario = new Funcionario();
+		
+		funcionario.setIdFuncionario(1L);
+		funcionario.setNmFuncionario("breno");
+		funcionario.setFlFuncionario(true);
+		funcionario.setDsCpf("12345678900");
+		funcionario.setDsEmail("breno@gmail.com");
+		funcionario.setDsSenha("123123");
+		
 		Horario horario = new Horario();
+		horario.setIdHorario(1L);
+		horario.setDtHorario("01/01/0001");
+		horario.setVlHorario(20);
+		horario.setCliente(cliente);
+		horario.setFuncionario(funcionario);
+		
 		ResponseEntity<String> response = this.controller.update(horario, 1);
 		String msg = response.getBody();
 
@@ -117,11 +162,35 @@ public class HorarioControllerTest {
 	}
 	
 	@Test
-	@DisplayName("TESTE MÉTODO findByLowerPreco()")
-	void testFindByLowerPreco() {
-		ResponseEntity<List<Horario>> response = this.controller.findByLowerPreco(50);
-		List<Horario> lista = response.getBody();
+	@DisplayName("TESTE MÉTODO save() com erro de validação com campos nulos")
+	void testSaveValidation() {
+		Cliente cliente = new Cliente();
+		cliente.setDsCpf("123");
+		cliente.setIdCliente(1L);
+		cliente.setNmCliente("TESTE ");
+		cliente.setDsEmail("Ivao");
+		cliente.setDsSenha("cassol");
 		
-		assertEquals(1, lista.size());
+		Funcionario funcionario = new Funcionario();
+		
+		funcionario.setIdFuncionario(1L);
+		funcionario.setNmFuncionario("breno");
+		funcionario.setFlFuncionario(true);
+		funcionario.setDsCpf("12345678900");
+		funcionario.setDsEmail("breno@gmail.com");
+		funcionario.setDsSenha("123123");
+		
+		Horario horario = new Horario();
+		horario.setIdHorario(1L);
+		horario.setDtHorario(null);
+		horario.setVlHorario(20);
+		horario.setCliente(cliente);
+		horario.setFuncionario(funcionario);
+		
+		ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> {
+	        this.controller.save(horario);
+	    });
+
+	    assertEquals("save.obj.dtHorario: Informe o Horário!", exception.getMessage());
 	}
 }
