@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.FormaPagamento;
 import app.service.FormaPagamentoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/formaPagamento")
+@Validated
 public class FormaPagamentoController {
 
 
@@ -28,7 +31,7 @@ public class FormaPagamentoController {
 
 
 	@PostMapping("/save")
-	public ResponseEntity<String> saveFormaPagamento(@RequestBody FormaPagamento formaPagamento){
+	public ResponseEntity<String> saveFormaPagamento(@Valid @RequestBody FormaPagamento formaPagamento){
 		try {
 			String msg = this.formaPagamentoService.save(formaPagamento);
 			return new ResponseEntity<String>(msg, HttpStatus.CREATED);
@@ -50,7 +53,7 @@ public class FormaPagamentoController {
 
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> updateFormaPagamento(@PathVariable long idFormaPagto, @RequestBody FormaPagamento formaPagamento) {
+	public ResponseEntity<String> updateFormaPagamento(@PathVariable long idFormaPagto,@Valid  @RequestBody FormaPagamento formaPagamento) {
 		try {
 			formaPagamento.setIdFormaPagto(idFormaPagto);
 			String msg = this.formaPagamentoService.update(formaPagamento, idFormaPagto);
