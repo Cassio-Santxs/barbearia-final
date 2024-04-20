@@ -53,7 +53,7 @@ public class FormaPagamentoController {
 
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> updateFormaPagamento(@Valid @PathVariable long idFormaPagto, @RequestBody FormaPagamento formaPagamento) {
+	public ResponseEntity<String> updateFormaPagamento(@PathVariable long idFormaPagto,@Valid @RequestBody FormaPagamento formaPagamento) {
 		try {
 			formaPagamento.setIdFormaPagto(idFormaPagto);
 			String msg = this.formaPagamentoService.update(formaPagamento, idFormaPagto);
