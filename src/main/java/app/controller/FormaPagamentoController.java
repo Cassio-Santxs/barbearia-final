@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/formaPagamento")
 @Validated
+@CrossOrigin("*")
 public class FormaPagamentoController {
 
 
@@ -41,7 +43,7 @@ public class FormaPagamentoController {
 	}
 
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/delete/{idFormaPagto}")
 	public ResponseEntity<String> deleteFormaPagamento(@PathVariable long idFormaPagto) {
 		try {
 			this.formaPagamentoService.delete(idFormaPagto);
@@ -52,7 +54,7 @@ public class FormaPagamentoController {
 	}
 
 
-	@PutMapping("/update/{id}")
+	@PutMapping("/update/{idFormaPagto}")
 	public ResponseEntity<String> updateFormaPagamento(@PathVariable long idFormaPagto,@Valid @RequestBody FormaPagamento formaPagamento) {
 		try {
 			formaPagamento.setIdFormaPagto(idFormaPagto);
