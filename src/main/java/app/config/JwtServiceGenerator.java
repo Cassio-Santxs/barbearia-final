@@ -20,14 +20,14 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtServiceGenerator {  
 
-  public String generateToken(Cliente userDetails) {
+  public String generateToken(String username, Long id, String role) {
 	
 	  
 	  //AQUI VOCÊ PODE COLOCAR O QUE MAIS VAI COMPOR O PAYLOAD DO TOKEN
       Map<String, Object> extraClaims = new HashMap<>();
-      extraClaims.put("username", userDetails.getDsEmail());
-      extraClaims.put("id", userDetails.getIdCliente());
-      extraClaims.put("role","cliente");
+      extraClaims.put("username", username);
+      extraClaims.put("id", id);
+      extraClaims.put("role", role);
    
     
 	  
@@ -35,7 +35,7 @@ public class JwtServiceGenerator {
       return Jwts
               .builder()
               .setClaims(extraClaims)
-              .setSubject(userDetails.getDsEmail())
+              .setSubject(username)
               .setIssuedAt(new Date(System.currentTimeMillis()))
               .setExpiration(new Date(new Date().getTime() + 3600000 * JwtConfig.HORAS_EXPIRACAO_TOKEN))
               .signWith(getSigningKey(), JwtConfig.ALGORITMO_ASSINATURA)

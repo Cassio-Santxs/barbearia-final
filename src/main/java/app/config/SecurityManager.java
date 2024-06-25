@@ -1,5 +1,7 @@
 package app.config;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,18 +9,25 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import app.auth.LoginRepository;
+import app.entity.Cliente;
+import app.entity.Funcionario;
+import app.repository.ClienteRepository;
+import app.repository.FuncionarioRepository;
 
 @Configuration
 public class SecurityManager {
 	
 	@Autowired
-	private LoginRepository loginRepository;
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private FuncionarioRepository funcionarioRepository;
 	
 	
 	@Bean
@@ -43,8 +52,20 @@ public class SecurityManager {
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return username -> loginRepository.findByUsername(username)
-				.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado") );
+		
+		return username -> this.buscarUsuario(username);
+	}
+	
+	private UserDetails buscarUsuario(String username){
+		Cliente user = clienteRepository.findByUsername(username).get();
+		Funcionario admin = funcionarioRepository.findByUsername(username).get();
+		
+		if(user != null)
+			return user;
+		else if(admin != null)
+			return admin;
+		else 
+			throw new RuntimeErrorException(null, "Usuário não encontrado");
 	}
 
 
