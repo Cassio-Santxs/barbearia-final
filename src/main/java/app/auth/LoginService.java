@@ -58,6 +58,7 @@ public class LoginService {
 			throw  new UsernameNotFoundException("Usuário não encontrado");
 		
 	
+		
 		return jwtToken;
 	}
 
