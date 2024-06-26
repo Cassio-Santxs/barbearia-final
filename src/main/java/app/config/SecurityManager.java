@@ -63,7 +63,7 @@ public class SecurityManager {
 	}
 	*/
 	private UserDetails buscarUsuario(String username){
-	
+
 		System.out.println(username);
 		System.out.println("b");
 		String username2 = username;

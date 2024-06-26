@@ -92,7 +92,7 @@ public class ClienteController {
 	@GetMapping("/findBydsCpf/{dscpf}")
 	public ResponseEntity<List<Cliente>> findBydsCpf(@PathVariable String dscpf){
 		try {
-			List<Cliente> lista = this.service.findBydsCpf(dscpf);
+			List<Cliente> lista = this.service.findByDsCpf(dscpf);
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

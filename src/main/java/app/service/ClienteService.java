@@ -10,49 +10,50 @@ import app.repository.ClienteRepository;
 
 @Service
 public class ClienteService {
-
 	@Autowired
-	private ClienteRepository clienteRepository;
+    private ClienteRepository clienteRepository;
 
-	public String save(Cliente obj) {
-		this.clienteRepository.save(obj);
-		return obj.getNmCliente() + " Cliente salvo com sucesso.";
-	}
+    @Autowired
+    private PasswordService passwordService;
 
-	public List<Cliente> listAll() {
-		return this.clienteRepository.findAll();
-	}
+    public String save(Cliente obj) {
+        // Criptografa a senha antes de salvar
+        obj.setDsSenha(passwordService.encodePassword(obj.getDsSenha()));
+        obj.setUsername(obj.getDsEmail()); // Atribui dsEmail para username
 
-		public String update(long id, Cliente obj) {
-			obj.setIdCliente(id);
-			this.clienteRepository.save(obj);
-			return "Sucesso!";
-		}
-	
+        clienteRepository.save(obj); // Salvando o cliente no repositório
 
-	public Cliente findById(long id) {
-		return this.clienteRepository.findById(id).orElse(null);
-	}
+        return obj.getNmCliente() + " Cliente salvo com sucesso.";
+    }
 
-	public String delete(long id) {
-		this.clienteRepository.deleteById(id);
-		return "Cliente deletado com sucesso";
-	}
+    public List<Cliente> listAll() {
+        return clienteRepository.findAll();
+    }
 
-	public List<Cliente> findByNmCliente(String NmCliente) {
-		return this.clienteRepository.findByNmCliente(NmCliente);
-	}
+    public String update(long id, Cliente obj) {
+        obj.setIdCliente(id);
+        clienteRepository.save(obj);
+        return "Cliente atualizado com sucesso!";
+    }
 
-	public List<Cliente> findBydsCpf(String dscpf) {
-		return this.clienteRepository.findBydsCpf(dscpf);
-	}
-	
-	public Boolean verifyEmail(String dsEmail) {
-		boolean retorno = false;
-		
-		if(dsEmail.contains("@"))
-			retorno = true;
-		
-		return retorno;
-	}
+    public Cliente findById(long id) {
+        return clienteRepository.findById(id).orElse(null);
+    }
+
+    public String delete(long id) {
+        clienteRepository.deleteById(id);
+        return "Cliente deletado com sucesso";
+    }
+
+    public List<Cliente> findByNmCliente(String nmCliente) {
+        return clienteRepository.findByNmCliente(nmCliente);
+    }
+
+    public List<Cliente> findByDsCpf(String dsCpf) {
+        return clienteRepository.findBydsCpf(dsCpf);
+    }
+
+    public Boolean verifyEmail(String dsEmail) {
+        return dsEmail.contains("@");
+    }
 }
