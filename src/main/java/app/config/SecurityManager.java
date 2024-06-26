@@ -1,6 +1,6 @@
 package app.config;
 
-import javax.management.RuntimeErrorException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -55,17 +55,35 @@ public class SecurityManager {
 		
 		return username -> this.buscarUsuario(username);
 	}
-	
+	/*
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return username -> clienteRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado") );
+	}
+	*/
 	private UserDetails buscarUsuario(String username){
-		Cliente user = clienteRepository.findByUsername(username).get();
-		Funcionario admin = funcionarioRepository.findByUsername(username).get();
-		
-		if(user != null)
-			return user;
-		else if(admin != null)
-			return admin;
-		else 
-			throw new RuntimeErrorException(null, "Usuário não encontrado");
+	
+		System.out.println(username);
+		System.out.println("b");
+		String username2 = username;
+
+		Optional<Cliente> user = clienteRepository.findByUsername(username);
+		System.out.println("c");
+		System.out.println(username);
+		System.out.println(username2);
+
+		Optional<Funcionario>  admin = funcionarioRepository.findByUsername(username2);
+		System.out.println("d");
+
+		if(user.isPresent()) {
+			System.out.println("f");
+			return user.get()
+;		}else if(admin.isPresent()) {
+			System.out.println("e");
+			return admin.get();
+		}else 
+			throw  new UsernameNotFoundException("Usuário não encontrado");
 	}
 
 
