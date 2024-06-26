@@ -1,6 +1,7 @@
 package app.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,10 @@ public class ClienteService {
 
 	public List<Cliente> findByNmCliente(String NmCliente) {
 		return this.clienteRepository.findByNmCliente(NmCliente);
+	}
+	
+	public Optional<Cliente> findByUsername(String username) {
+		return this.clienteRepository.findByUsername(username);
 	}
 
 	public List<Cliente> findBydsCpf(String dscpf) {
