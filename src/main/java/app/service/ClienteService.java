@@ -32,6 +32,8 @@ public class ClienteService {
     }
 
     public String update(long id, Cliente obj) {
+    	obj.setDsSenha(passwordService.encodePassword(obj.getDsSenha()));
+        obj.setUsername(obj.getDsEmail());
         obj.setIdCliente(id);
         clienteRepository.save(obj);
         return "Cliente atualizado com sucesso!";

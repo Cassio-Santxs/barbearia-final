@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.entity.Cliente;
 import app.entity.Horario;
 import app.service.HorarioService;
 import jakarta.validation.Valid;
@@ -77,6 +78,17 @@ public class HorarioController {
 		try {
 			String msg = this.service.delete(id);
 			return new ResponseEntity<String>(msg, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PreAuthorize("hasRole('cliente')")
+	@GetMapping("/findByIdCliente/{idCliente}")
+	public ResponseEntity<List<Horario>> findByIdCliente(@PathVariable Long idCliente){
+		try {
+			List<Horario> lista = this.service.findByIdCliente(idCliente);
+			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}

@@ -44,4 +44,8 @@ public class HorarioService {
 	public List<Horario> checkHorarioExist (Long idFuncionario, String horario){
 		return this.repository.checkHorarioExist(idFuncionario, horario);
 	}
+	
+	public List<Horario> findByIdCliente (Long idCliente){
+		return this.repository.findByIdCliente(idCliente);
+	}
 }

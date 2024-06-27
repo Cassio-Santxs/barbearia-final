@@ -35,8 +35,7 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .cors(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/api/login", "/api/cadastro", "/api/cliente/save").permitAll() // Permitir acesso a esses endpoints
-                .requestMatchers("/api/login", "/api/cadastro", "/api/horario/save").permitAll() // Permitir acesso a esses endpoints
+                .requestMatchers("/api/login", "/api/cadastro", "/api/cliente/save", "api/cliente/findByUsername/{username}", "api/horario/findByIdCliente/{idCliente}").permitAll()                // Permitir acesso a esses endpoints
                 .anyRequest().authenticated())
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
