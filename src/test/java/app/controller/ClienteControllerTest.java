@@ -92,7 +92,7 @@ public class ClienteControllerTest {
 		ResponseEntity<String> response = this.controller.update(cliente, 1);
 		String msg = response.getBody();
 
-		assertEquals("Sucesso!", msg);
+		assertEquals("Cliente atualizado com sucesso!", msg);
 	}
 
 	@Test

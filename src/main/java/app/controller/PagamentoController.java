@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/pagamento")
 @Validated
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class PagamentoController {
 
     @Autowired
