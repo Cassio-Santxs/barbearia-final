@@ -83,7 +83,6 @@ public class HorarioController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('cliente')")
 	@GetMapping("/findByIdCliente/{idCliente}")
 	public ResponseEntity<List<Horario>> findByIdCliente(@PathVariable Long idCliente){
 		try {
