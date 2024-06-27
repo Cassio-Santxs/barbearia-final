@@ -15,6 +15,9 @@ public class FuncionarioService {
 	@Autowired
 	private FuncionarioRepository repository;
 	
+	@Autowired
+    private PasswordService passwordService;
+	
 	public String save(Funcionario obj) throws Exception {
 		
 		if(obj == null)
@@ -24,6 +27,9 @@ public class FuncionarioService {
 		
 		if(!emailVerificado)
 			throw new Exception("E-mail inválido!");
+		
+		obj.setUsername(obj.getDsEmail());
+		obj.setDsSenha(passwordService.encodePassword(obj.getDsSenha()));
 		
 		this.repository.save(obj);
 		return ("Salvo com sucesso!");
@@ -45,6 +51,9 @@ public class FuncionarioService {
 		
 		if(!emailVerificado)
 			throw new Exception("E-mail inválido!");
+		
+		funcionario.setUsername(funcionario.getDsEmail());
+		funcionario.setDsSenha(passwordService.encodePassword(funcionario.getDsSenha()));
 		
 		this.repository.save(funcionario);
 		
