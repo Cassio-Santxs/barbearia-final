@@ -1,12 +1,16 @@
 package app.repository;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import app.entity.Horario;
 import app.entity.Pagamento;
 
+@Repository
 public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
-    // Não é necessário adicionar um método save aqui, pois ele é fornecido por padrão pelo JpaRepository.
-    // Outros métodos personalizados podem ser adicionados, se necessário.
-    void deleteByIdPagamento(Long idPagamento);
-
-	
+    Optional<Pagamento> findByHorario(Horario horario);
+    List<Pagamento> findByValor(double valor);  // Adicione esta linha
 }

@@ -1,5 +1,6 @@
 package app.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,7 +24,7 @@ public class Pagamento {
 	private Long idPagamento;
 	
 	@NotNull(message = "Digite a Data de pagamento!")
-	private LocalDateTime dtPagamento;
+	private LocalDate dtPagamento;
 	
 	@NotNull(message = "Informe o horário do pagamento!")
 	@OneToOne(cascade = CascadeType.PERSIST)
@@ -40,6 +41,9 @@ public class Pagamento {
 	@NotBlank(message = "Informe a situação do paganento!")
 	private String dsSituacao;
 
+	private double valor;
+
+	
 	
 	public Horario getHorario() {
 		return horario;
@@ -67,11 +71,11 @@ public class Pagamento {
 		this.idPagamento = idPagamento;
 	}
 
-	public LocalDateTime getDtPagamento() {
+	public LocalDate getDtPagamento() {
 		return dtPagamento;
 	}
 
-	public void setDtPagamento(LocalDateTime dtPagamento) {
+	public void setDtPagamento(LocalDate dtPagamento) {
 		this.dtPagamento = dtPagamento;
 	}
 
@@ -83,4 +87,16 @@ public class Pagamento {
 	public void setDsSituacao(String dsSituacao) {
 		this.dsSituacao = dsSituacao;
 	}
+
+	public Object getId() {
+		return idPagamento;
+	}
+
+	 public double getValor() {
+	        return valor;
+	    }
+
+	 public void setValor(double valor) {
+	        this.valor = valor;
+	    }
 }

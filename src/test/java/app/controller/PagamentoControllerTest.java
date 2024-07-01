@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class PagamentoControllerTest {
 
         Pagamento pagamento = new Pagamento();
         pagamento.setIdPagamento(1L);
-        pagamento.setDtPagamento(LocalDateTime.now());
+        pagamento.setDtPagamento(LocalDate.now());
         pagamento.setHorario(horario);
         pagamento.setFormaPagamento(formaPagamento);
         pagamento.setDsSituacao("Pago");
@@ -83,7 +84,7 @@ public class PagamentoControllerTest {
 
         Pagamento pagamento = new Pagamento();
         pagamento.setIdPagamento(1L);
-        pagamento.setDtPagamento(LocalDateTime.now());
+        pagamento.setDtPagamento(LocalDate.now());
         pagamento.setHorario(horario);
         pagamento.setFormaPagamento(formaPagamento);
         pagamento.setDsSituacao("Pago");
@@ -105,7 +106,7 @@ public class PagamentoControllerTest {
 
         Pagamento pagamento = new Pagamento();
         pagamento.setIdPagamento(1L);
-        pagamento.setDtPagamento(LocalDateTime.now());
+        pagamento.setDtPagamento(LocalDate.now());
         pagamento.setHorario(horario);
         pagamento.setFormaPagamento(formaPagamento);
         pagamento.setDsSituacao("Pago");
@@ -160,7 +161,7 @@ public class PagamentoControllerTest {
         
     	Pagamento pagamento = new Pagamento();
         pagamento.setIdPagamento(1L);
-        pagamento.setDtPagamento(LocalDateTime.now());
+        pagamento.setDtPagamento(LocalDate.now());
         pagamento.setHorario(horario);
         pagamento.setFormaPagamento(formaPagamento);
         pagamento.setDsSituacao(null);
@@ -203,7 +204,7 @@ public class PagamentoControllerTest {
         
     	Pagamento pagamento = new Pagamento();
         pagamento.setIdPagamento(1L);
-        pagamento.setDtPagamento(LocalDateTime.now());
+        pagamento.setDtPagamento(LocalDate.now());
         pagamento.setHorario(horario);
         pagamento.setFormaPagamento(formaPagamento);
         pagamento.setDsSituacao(null);
