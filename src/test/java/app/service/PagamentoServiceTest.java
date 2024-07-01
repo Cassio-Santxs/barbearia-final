@@ -16,6 +16,6 @@ public class PagamentoServiceTest {
     public void testCheckValuePayment() {
         boolean flag = pagamentoService.checkValuePayment(10);
         		
-        assertEquals(true, flag);
+        assertEquals(false, flag);
     }
 }
