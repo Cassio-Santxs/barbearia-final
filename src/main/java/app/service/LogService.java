@@ -22,6 +22,15 @@ public class LogService {
 		return ("Salvo com sucesso!");
 	}
 	
+	public String saveAll(List<Log> logs) {
+        try {
+            repository.saveAll(logs);
+            return "Logs salvos com sucesso!";
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao salvar logs: " + e.getMessage());
+        }
+    }
+	
 	public List<Log> listAll(){
 		
 		return this.repository.findAll();

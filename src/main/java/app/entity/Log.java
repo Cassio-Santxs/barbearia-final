@@ -20,6 +20,9 @@ public class Log {
 	@NotBlank(message = "Informe a tabela do registro")
 	private String dsTabela;
 	
+	@NotBlank(message = "Informe a coluna do registro")
+	private String dsColuna;
+	
 	@NotBlank(message = "Informe a data de alteração do registro")
 	private String dtAlteracao;
 	
@@ -72,6 +75,14 @@ public class Log {
 
 	public void setDsTabela(String dsTabela) {
 		this.dsTabela = dsTabela;
+	}
+
+	public String getDsColuna() {
+		return dsColuna;
+	}
+
+	public void setDsColuna(String dsColuna) {
+		this.dsColuna = dsColuna;
 	}
 	
 	

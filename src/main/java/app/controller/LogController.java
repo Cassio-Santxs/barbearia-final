@@ -41,6 +41,16 @@ public class LogController {
 		}
 	}
 	
+	@PostMapping("/saveAll")
+	public ResponseEntity<String> saveAll(@Valid @RequestBody List<Log> logs) {
+	    try {
+	        String msg = this.service.saveAll(logs);
+	        return new ResponseEntity<>(msg, HttpStatus.CREATED);
+	    } catch (Exception e) {
+	        return new ResponseEntity<>("Não foi possível salvar: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+	    }
+	}
+	
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Log>> listAll(){
 		
