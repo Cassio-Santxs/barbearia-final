@@ -14,25 +14,41 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 
 public class Conversor implements Converter<Jwt, AbstractAuthenticationToken>{
 
-    @Override
-    public AbstractAuthenticationToken convert(Jwt jwt) {
+//    @Override
+//    public AbstractAuthenticationToken convert(Jwt jwt) {
+//
+//        String username = jwt.getClaimAsString("preferred_username");
+//
+//        Map<String, Collection<String>> realmAccess = jwt.getClaim("realm_access");
+//        Collection<GrantedAuthority> authorities = Collections.emptyList();
+//
+//        if (realmAccess != null && realmAccess.containsKey("roles")) {
+//            Collection<String> roles = realmAccess.get("roles");
+//
+//
+//            authorities = roles.stream()
+//                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+//                    .collect(Collectors.toList());
+//        }
+//
+//
+//        return new JwtAuthenticationToken(jwt, authorities, username);
+//    }
+	
+	 @Override
+	    public AbstractAuthenticationToken convert(Jwt jwt) {
 
-        String username = jwt.getClaimAsString("preferred_username");
+	        Map<String, Collection<String>> realmAccess = jwt.getClaim("realm_access");
+	        Collection<String> roles = realmAccess.get("roles");
+	        var grants = roles
+	                .stream()
+	                .map(role -> new SimpleGrantedAuthority("ROLE_" + role)).toList();
 
-        Map<String, Collection<String>> realmAccess = jwt.getClaim("realm_access");
-        Collection<GrantedAuthority> authorities = Collections.emptyList();
+	        for( SimpleGrantedAuthority role : grants ){
+	            System.out.println(role.getAuthority());
+	        }
 
-        if (realmAccess != null && realmAccess.containsKey("roles")) {
-            Collection<String> roles = realmAccess.get("roles");
-
-
-            authorities = roles.stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                    .collect(Collectors.toList());
-        }
-
-
-        return new JwtAuthenticationToken(jwt, authorities, username);
-    }
+	        return new JwtAuthenticationToken(jwt, grants);
+	    }
 
 }

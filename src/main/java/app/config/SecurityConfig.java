@@ -38,7 +38,7 @@ public class SecurityConfig  {
 				.oauth2ResourceServer(oauth2 -> oauth2
 						.jwt(jwt -> jwt.jwtAuthenticationConverter(new Conversor())))
 				.authorizeHttpRequests((requests) -> requests
-						.requestMatchers("/api/login", "/api/cadastro", "/api/cliente/save", "api/cliente/findByUsername/{username}").permitAll()
+						.requestMatchers("/api/log/findAll", "/api", "/api/", "/api/login", "/api/cadastro", "/api/cliente/save", "api/cliente/findByUsername/{username}").permitAll()
 						.anyRequest().authenticated());
 
 		http

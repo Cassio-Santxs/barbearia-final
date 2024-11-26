@@ -52,7 +52,6 @@ public class ClienteController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('cliente')")
 	@GetMapping("/listAll")
 	public ResponseEntity<List<Cliente>> listAll(){
 		try {
