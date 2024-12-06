@@ -32,17 +32,19 @@ public class SecurityConfig  {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http
-				.csrf(AbstractHttpConfigurer::disable)
-				.cors(Customizer.withDefaults())
-				.oauth2ResourceServer(oauth2 -> oauth2
-						.jwt(jwt -> jwt.jwtAuthenticationConverter(new Conversor())))
-				.authorizeHttpRequests((requests) -> requests
-						.requestMatchers("/api/log/findAll", "/api", "/api/", "/api/login", "/api/cadastro", "/api/cliente/save", "api/cliente/findByUsername/{username}").permitAll()
-						.anyRequest().authenticated());
+		//http
+		//		.csrf(AbstractHttpConfigurer::disable)
+		//		.cors(Customizer.withDefaults())
+		//		.oauth2ResourceServer(oauth2 -> oauth2
+		//				.jwt(jwt -> jwt.jwtAuthenticationConverter(new Conversor())))
+		//		.authorizeHttpRequests((requests) -> requests
+		//				.requestMatchers("/api/log/findAll", "/api", "/api/", "/api/login", "/api/cadastro", "/api/cliente/save", "api/cliente/findByUsername/{username}").permitAll()
+		//				.anyRequest().authenticated());
+		
+		http.csrf(csrf -> csrf.disable());
 
-		http
-				.sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		//http
+		//		.sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		return http.build();
 
 	}

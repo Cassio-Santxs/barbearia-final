@@ -52,7 +52,6 @@ public class HorarioController {
 		}
 	}
 
-	@PreAuthorize("hasRole('cliente')")
 	@GetMapping("/listAll")
 	public ResponseEntity<List<Horario>> listAll() {
 		try {
