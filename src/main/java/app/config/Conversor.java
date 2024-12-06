@@ -35,20 +35,37 @@ public class Conversor implements Converter<Jwt, AbstractAuthenticationToken>{
 //        return new JwtAuthenticationToken(jwt, authorities, username);
 //    }
 	
-	 @Override
-	    public AbstractAuthenticationToken convert(Jwt jwt) {
+	// @Override
+	//    public AbstractAuthenticationToken convert(Jwt jwt) {
+	//
+	//        Map<String, Collection<String>> realmAccess = jwt.getClaim("realm_access");
+	//        Collection<String> roles = realmAccess.get("roles");
+	//      var grants = roles
+	//              .stream()
+	//              .map(role -> new SimpleGrantedAuthority("ROLE_" + role)).toList();
+	//
+	//      for( SimpleGrantedAuthority role : grants ){
+	//          System.out.println(role.getAuthority());
+	//      }
+	//
+	//      return new JwtAuthenticationToken(jwt, grants);
+	//  }
+	
+	@Override
+	public AbstractAuthenticationToken convert(Jwt jwt) {
+	    Map<String, Collection<String>> realmAccess = jwt.getClaim("realm_access");
+	    Collection<String> roles = (realmAccess != null && realmAccess.containsKey("roles"))
+	            ? realmAccess.get("roles")
+	            : Collections.emptyList();
 
-	        Map<String, Collection<String>> realmAccess = jwt.getClaim("realm_access");
-	        Collection<String> roles = realmAccess.get("roles");
-	        var grants = roles
-	                .stream()
-	                .map(role -> new SimpleGrantedAuthority("ROLE_" + role)).toList();
+	    var grants = roles.stream()
+	            .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+	            .toList();
 
-	        for( SimpleGrantedAuthority role : grants ){
-	            System.out.println(role.getAuthority());
-	        }
+	    String username = jwt.getClaimAsString("preferred_username");
 
-	        return new JwtAuthenticationToken(jwt, grants);
-	    }
+	    return new JwtAuthenticationToken(jwt, grants, username);
+	}
+
 
 }

@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("api/log")
 @Validated
-//@CrossOrigin(origins = "*")
+@CrossOrigin(originPatterns = "*")
 public class LogController {
 	
 	@Autowired

@@ -27,6 +27,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/cliente")
 //@CrossOrigin(origins = "https://barbearia.mshome.net")
+@CrossOrigin(originPatterns = "*")
 public class ClienteController {
 	
 	@Autowired
